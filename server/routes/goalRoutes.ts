@@ -1,15 +1,16 @@
 import { Router } from "express"
 
 import { getGoals, addGoal, updateGoal, deleteGoal } from "../controllers/goalController"
+import { protectRoute } from "../middlewares/authMiddleware"
 
 const router = Router()
 
-router.get("/", getGoals)
+router.get("/", protectRoute, getGoals)
 
-router.post("/", addGoal)
+router.post("/", protectRoute, addGoal)
 
-router.put("/:id", updateGoal)
+router.put("/:id", protectRoute, updateGoal)
 
-router.delete("/:id", deleteGoal)
+router.delete("/:id", protectRoute, deleteGoal)
 
 export default router

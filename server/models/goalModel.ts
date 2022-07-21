@@ -5,6 +5,11 @@ const goalSchema = new Schema(
     text: {
       type: String,
       required: [true, "Please add a text value"]
+    },
+    userId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "User"
     }
   },
   {

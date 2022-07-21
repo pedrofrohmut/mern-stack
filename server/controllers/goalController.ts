@@ -6,9 +6,9 @@ import goalModel from "../models/goalModel"
 // @desc Get All Goals
 // @Route GET api/goals
 // @Access Private
-export const getGoals = asyncHandler(async (_req: Request, res: Response) => {
+export const getGoals = asyncHandler(async (req: Request, res: Response) => {
   try {
-    const goals = await goalModel.find()
+    const goals = await goalModel.find({ userId: req.user?.id })
     res.status(200).json(goals)
   } catch (err) {
     throw new Error("Error to get all goals from Database")
@@ -24,7 +24,7 @@ export const addGoal = asyncHandler(async (req: Request, res: Response) => {
     throw new Error("Invalid request no text in the request body")
   }
   try {
-    await goalModel.create({ text: req.body.text })
+    await goalModel.create({ text: req.body.text, userId: req.user?.id })
     res.status(201).json()
   } catch (err) {
     throw new Error("Error to add a goal to the Database")
@@ -45,14 +45,19 @@ export const updateGoal = asyncHandler(async (req: Request, res: Response) => {
     res.status(400)
     throw new Error("Invalid request. No text in the request body")
   }
+  let goalToUpdate: any
   try {
-    const goalToUpdate = await goalModel.findById(goalId)
+    goalToUpdate = await goalModel.findById(goalId)
     if (goalToUpdate === null) {
       res.status(400).json({ message: "Goal to be update was not found" })
       return
     }
   } catch (err) {
-    throw new Error("Error to get goal to delete in the Database")
+    throw new Error("Error to get goal to update in the Database")
+  }
+  if (goalToUpdate.userId.toString() !== req.user?.id) {
+    res.status(401)
+    throw new Error("The current user is not of the resource owner")
   }
   try {
     await goalModel.findByIdAndUpdate(goalId, updatedGoal)
@@ -71,14 +76,19 @@ export const deleteGoal = asyncHandler(async (req: Request, res: Response) => {
     res.status(400)
     throw new Error("Invalid request. No ID in the request parameters")
   }
+  let goalToDelete: any
   try {
-    const goalToDelete = await goalModel.findById(goalId)
+    goalToDelete = await goalModel.findById(goalId)
     if (goalToDelete === null) {
       res.status(400).json({ message: "Goal to be deleted was not found" })
       return
     }
   } catch (err) {
     throw new Error("Error to get goal to delete in the Database")
+  }
+  if (goalToDelete.userId.toString() !== req.user?.id) {
+    res.status(401)
+    throw new Error("The current user is not of the resource owner")
   }
   try {
     await goalModel.deleteOne({ _id: goalId })

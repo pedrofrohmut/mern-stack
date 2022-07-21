@@ -4,8 +4,8 @@ export const errorHandler = (err: Error, _req: Request, res: Response, _next: Ne
   if (!res.statusCode) {
     res.status(500)
   }
-  res.json({ 
+  res.json({
     message: err.message,
-    stack: process.env.NODE_ENV === "development" ? err.stack : null 
+    stack: process.env.NODE_ENV === "development" ? err.stack : null
   })
 }
