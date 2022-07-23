@@ -1,22 +1,67 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 import { FaUser } from "react-icons/fa"
+
+import Spinner from "../components/Spinner"
+
+import { reset } from "../features/auth/authSlice"
+import { useAppDispatch, useAppSelector } from "../app/hooks"
+import { RootState } from "../app/store"
+import { signup } from "../features/auth/authThunks"
+
+type SignUpState = {
+  name: string
+  email: string
+  phone: string
+  password: string
+  confirmPassword: string
+}
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     password: "",
     confirmPassword: ""
   })
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
-  const { name, email, password, confirmPassword } = formData
+  const { name, email, phone, password, confirmPassword } = formData
+
+  const { user, isLoading, isError, isSuccess, message } = useAppSelector(
+    (state: RootState) => state.auth
+  )
+
+  useEffect(() => {
+    if (isError) toast.error(message)
+    if (isSuccess) navigate("/signin")
+    if (user) navigate("/")
+    dispatch(reset())
+  }, [user, isError, isSuccess, message, navigate, dispatch])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prevState: any) => ({ ...prevState, [e.target.name]: e.target.value }))
+    setFormData((prevState: SignUpState) => ({ ...prevState, [e.target.name]: e.target.value }))
   }
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    // TODO: add html5 form validation
+    if (password !== confirmPassword) {
+      toast.error("Password do not match")
+      return
+    }
+    dispatch(signup({ name, email, phone, password }))
+  }
+
+  if (isLoading) {
+    return (
+      <div className="container">
+        <Spinner />
+      </div>
+    )
   }
 
   return (
@@ -55,6 +100,20 @@ const SignUp = () => {
               value={email}
               onChange={onChange}
               placeholder="Enter your e-mail address"
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label" htmlFor="phone">
+              Phone
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="phone"
+              name="phone"
+              value={phone}
+              onChange={onChange}
+              placeholder="Enter your Phone Number"
             />
           </div>
           <div className="form-group">

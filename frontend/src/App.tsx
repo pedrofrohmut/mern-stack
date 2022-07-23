@@ -1,9 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { ToastContainer } from "react-toastify"
 
 import Dashboard from "./pages/Dashboard"
 import SignUp from "./pages/SignUp"
 import SignIn from "./pages/SignIn"
 import Header from "./components/Header"
+
+import "react-toastify/dist/ReactToastify.css"
 
 const App = () => {
   return (
@@ -16,6 +19,7 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
         </Routes>
       </BrowserRouter>
+      <ToastContainer />
     </>
   )
 }
