@@ -36,10 +36,12 @@ const SignUp = () => {
   )
 
   useEffect(() => {
-    if (isError) toast.error(message)
+    if (isError) {
+      toast.error(message)
+      dispatch(reset())
+    }
     if (isSuccess) navigate("/signin")
     if (user) navigate("/")
-    dispatch(reset())
   }, [user, isError, isSuccess, message, navigate, dispatch])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,10 +1,39 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FaSignInAlt } from "react-icons/fa"
+import { useNavigate } from "react-router-dom"
+
+import Spinner from "../components/Spinner"
+
+import { useAppDispatch, useAppSelector } from "../app/hooks"
+import { RootState } from "../app/store"
+import { toast } from "react-toastify"
+import { reset } from "../features/auth/authSlice"
+import { signin } from "../features/auth/authThunks"
+
+type SignInState = {
+  email: string
+  password: string
+}
 
 const SignIn = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" })
+  const [formData, setFormData] = useState<SignInState>({ email: "", password: "" })
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
   const { email, password } = formData
+
+  const { user, isLoading, isError, isSuccess, message } = useAppSelector(
+    (state: RootState) => state.auth
+  )
+
+  useEffect(() => {
+    if (isError) { 
+      toast.error(message)
+      dispatch(reset())
+    }
+    if (isSuccess) navigate("/")
+    if (user) navigate("/")
+  }, [user, isError, isSuccess, message, navigate, dispatch])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prevState: any) => ({ ...prevState, [e.target.name]: e.target.value }))
@@ -12,6 +41,16 @@ const SignIn = () => {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    // TODO: add html5 form validation
+    dispatch(signin({ email, password }))
+  }
+
+  if (isLoading) {
+    return (
+      <div className="container">
+        <Spinner />
+      </div>
+    )
   }
 
   return (
