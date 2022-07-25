@@ -6,9 +6,17 @@ import SignUp from "./pages/SignUp"
 import SignIn from "./pages/SignIn"
 import Header from "./components/Header"
 
+import { useAppDispatch } from "./app/hooks"
+import { setUser } from "./features/auth/authSlice"
+
 import "react-toastify/dist/ReactToastify.css"
 
 const App = () => {
+  const dispatch = useAppDispatch()
+  const localStorageUser = localStorage.getItem("user")
+  if (localStorageUser) {
+    dispatch(setUser(JSON.parse(localStorageUser)))
+  }
   return (
     <>
       <BrowserRouter>

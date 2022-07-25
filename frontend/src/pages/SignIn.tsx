@@ -27,7 +27,7 @@ const SignIn = () => {
   )
 
   useEffect(() => {
-    if (isError) { 
+    if (isError) {
       toast.error(message)
       dispatch(reset())
     }
