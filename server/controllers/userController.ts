@@ -90,7 +90,5 @@ export const signInUser = asyncHandler(async (req: Request, res: Response): Prom
 // @route GET api/users
 // @access Private
 export const getCurrentUser = asyncHandler(async (req: Request, res: Response): Promise<void> => {
-  // @ts-ignore
-  const { _id, name, email } = await userModel.findById(req.user.id)
-  res.status(200).json({ id: _id, name, email })
+  res.status(200).json(req.user)
 })
