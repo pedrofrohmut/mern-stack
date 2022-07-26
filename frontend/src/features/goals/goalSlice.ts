@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-import { getAll } from "./goalThunks"
+import { add, getAll } from "./goalThunks"
 
 import { Goal, GoalState } from "../types"
 
@@ -30,6 +30,19 @@ export const goalSlice = createSlice({
         state.goals = action.payload
       })
       .addCase(getAll.rejected, (state: GoalState, action: PayloadAction<string>) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      // Add
+      .addCase(add.pending, (state: GoalState) => {
+        state.isLoading = true
+      })
+      .addCase(add.fulfilled, (state: GoalState) => {
+        state.isLoading = false
+        state.isSuccess = true
+      })
+      .addCase(add.rejected, (state: GoalState, action: PayloadAction<string>) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

@@ -1,7 +1,8 @@
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 import Spinner from "../components/Spinner"
+import AddGoalForm from "../components/AddGoalForm"
 
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { RootState } from "../app/store"
@@ -14,7 +15,7 @@ const Dashboard = () => {
 
   const { user } = useAppSelector((state: RootState) => state.auth)
 
-  const { goals } = useAppSelector((state: RootState) => state.goals)
+  const { goals, isLoading } = useAppSelector((state: RootState) => state.goals)
 
   useEffect(() => {
     if (!user) {
@@ -26,20 +27,23 @@ const Dashboard = () => {
     }
   }, [user, navigate])
 
-  const Goals = () => (
-    <ul>
-      {goals.map(goal => (
-        <li key={goal.id}>{goal.text}</li>
-      ))}
-    </ul>
-  )
+  if (!user || !user.id) return null
 
   return (
     <div className="container">
-      <h1>Goals</h1>
-      <React.Suspense fallback={<Spinner />}>
-        <Goals />
-      </React.Suspense>
+      <section className="heading mb-5">
+        <h1>Welcome {user && user.name}</h1>
+        <p>Goals Dashboard</p>
+      </section>
+      <AddGoalForm userId={user.id} />
+      {isLoading && <Spinner />}
+      {!isLoading && goals && (
+        <ul>
+          {goals.map(goal => (
+            <li key={goal.id}>{goal.text}</li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }

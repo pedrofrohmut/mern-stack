@@ -78,7 +78,6 @@ h3 {
 .heading {
   font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 50px;
   padding: 0 20px;
 }
 
@@ -133,6 +132,17 @@ h3 {
   text-align: left;
   display: block;
   margin: 0 0 5px 3px;
+}
+
+.inline-form-group {
+  display: flex;
+  align-items: center;
+}
+
+.inline-form-group input {
+  padding: 8px 12px;
+  margin-right: 10px;
+  width: 100%;
 }
 
 .btn {
@@ -212,4 +222,8 @@ h3 {
   .heading p {
     font-size: 1.5rem;
   }
+}
+
+.mb-5 {
+  margin-bottom: 50px;
 }
