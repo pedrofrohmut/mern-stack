@@ -42,6 +42,9 @@ const SignUp = () => {
     }
     if (isSuccess) navigate("/signin")
     if (user) navigate("/")
+    return () => {
+      dispatch(reset())
+    }
   }, [user, isError, isSuccess, message, navigate, dispatch])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

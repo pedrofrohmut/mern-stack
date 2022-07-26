@@ -31,8 +31,12 @@ const SignIn = () => {
       toast.error(message)
       dispatch(reset())
     }
-    if (isSuccess) navigate("/")
-    if (user) navigate("/")
+    if (isSuccess || user) {
+      navigate("/")
+    }
+    return () => {
+      dispatch(reset())
+    }
   }, [user, isError, isSuccess, message, navigate, dispatch])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
