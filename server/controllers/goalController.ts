@@ -24,8 +24,8 @@ export const addGoal = asyncHandler(async (req: Request, res: Response) => {
     throw new Error("Invalid request no text in the request body")
   }
   try {
-    await goalModel.create({ text: req.body.text, userId: req.user?.id })
-    res.status(201).json()
+    const addedGoal = await goalModel.create({ text: req.body.text, userId: req.user?.id })
+    res.status(201).json(addedGoal)
   } catch (err) {
     throw new Error("Error to add a goal to the Database")
   }
