@@ -2,7 +2,7 @@ import { useState } from "react"
 import { toast } from "react-toastify"
 
 import { useAppDispatch } from "../app/hooks"
-import { add, getAll } from "../features/goals/goalThunks"
+import { add } from "../features/goals/goalThunks"
 
 type Props = { userId: string }
 
@@ -24,7 +24,6 @@ const AddGoalForm = ({ userId }: Props) => {
       toast.error("Could not get userId from session. Please Try to sign in")
     }
     dispatch(add({ text, userId }))
-    dispatch(getAll())
     setText("")
   }
 

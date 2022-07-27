@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-import { add, getAll } from "./goalThunks"
+import { add, getAll, remove } from "./goalThunks"
 
 import { Goal, GoalState } from "../types"
 
@@ -27,25 +27,46 @@ export const goalSlice = createSlice({
       .addCase(getAll.fulfilled, (state: GoalState, action: PayloadAction<Goal[]>) => {
         state.isLoading = false
         state.isSuccess = true
-        state.goals = action.payload
+        const goals = action.payload
+        state.goals = goals
       })
       .addCase(getAll.rejected, (state: GoalState, action: PayloadAction<string>) => {
         state.isLoading = false
         state.isError = true
-        state.message = action.payload
+        const errorMessage = action.payload
+        state.message = errorMessage
       })
       // Add
       .addCase(add.pending, (state: GoalState) => {
         state.isLoading = true
       })
-      .addCase(add.fulfilled, (state: GoalState) => {
+      .addCase(add.fulfilled, (state: GoalState, action: PayloadAction<Goal>) => {
         state.isLoading = false
         state.isSuccess = true
+        const addedGoal = action.payload
+        state.goals.push(addedGoal)
       })
       .addCase(add.rejected, (state: GoalState, action: PayloadAction<string>) => {
         state.isLoading = false
         state.isError = true
-        state.message = action.payload
+        const errorMessage = action.payload
+        state.message = errorMessage
+      })
+      // Delete
+      .addCase(remove.pending, (state: GoalState) => {
+        state.isLoading = true
+      })
+      .addCase(remove.fulfilled, (state: GoalState, action: PayloadAction<string>) => {
+        state.isLoading = false
+        state.isSuccess = true
+        const removedGoalId = action.payload
+        state.goals = state.goals.filter(goal => goal.id !== removedGoalId)
+      })
+      .addCase(remove.rejected, (state: GoalState, action: PayloadAction<string>) => {
+        state.isLoading = false
+        state.isError = true
+        const errorMessage = action.payload
+        state.message = errorMessage
       })
   }
 })
