@@ -1,0 +1,119 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  font-size: 16px;
+  /* Tokyo Pallete */
+  --pink: #f7768e;
+  --orange: #ff9e64;
+  --yellow: #e0af68;
+  --green: #9ece6a;
+  --blueGreen: #73daca;
+  --lightBlueGreen: #b4f9f8;
+  --blue: #2ac3de;
+  --lightBlue: #7dcfff;
+  --grayBlue: #7aa2f7;
+  --purple: #bb9af7;
+  --darkPurple: #7f41f1;
+  --gray-100: #cfc9c2;
+  --gray-200: #c0caf5;
+  --gray-300: #a9b1d6;
+  --gray-400: #9aa5ce;
+  --gray-500: #565f89;
+  --gray-600: #414868;
+  --gray-700: #24283b;
+  --gray-800: #1a1b26;
+
+  /* Takoy pallete B */
+  --bGreen: #00ffd2;
+  --bRed: #ff4499;
+  --bDarkBlue: #0a0047;
+  --bBlue: #004687;
+
+  /* Badic */
+  --black: #000000;
+  --white: #ffffff;
+}
+
+body {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 24px;
+  font-weight: 400;
+
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#app {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 1em 0;
+}
+
+p {
+  padding: 1em 0;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 760px;
+  width: 80%;
+}
+
+.page-title {
+  font-size: 4rem;
+  color: var(--lightBlueGreen);
+  padding: 2rem 0;
+}
+
+.btn {
+  padding: 0.8em 2.4em;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border: 1px solid var(--darkPurple);
+  border-radius: 0.5rem;
+  background-color: var(--darkPurple);
+  color: var(--gray-300);
+}
+
+.form-text {
+  padding: 0.8em 1.2em;
+  font-size: 1.2rem;
+  color: var(--white);
+  background-color: var(--gray-500);
+  border: 1px solid var(--gray-500);
+  border-radius: 0.5rem;
+  width: 100%;
+}
+
+.form-text::placeholder {
+  color: var(--grayBlue);
+}
+
+.form-group {
+  margin: 0 0 2.5rem 0;
+}
+
+.form-group label {
+  font-size: 1.3rem;
+  color: var(--lightBlueGreen);
+}
+
+.form-group .label-block {
+  display: block;
+  margin: 0 0 0.6rem 0;
+}
