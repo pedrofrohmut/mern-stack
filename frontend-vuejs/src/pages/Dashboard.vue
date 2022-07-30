@@ -1,17 +1,14 @@
 <script lang="ts">
 import { defineComponent } from "vue"
+import { v4 as uuid } from "uuid"
+
+import type { Goal } from "../types"
+
+import store from "../store"
 
 import AddGoalForm from "../components/AddGoalForm.vue"
 import Spinner from "../components/Spinner.vue"
 import GoalList from "../components/GoalList.vue"
-
-type Goal = { id: string; text: string; userId: string }
-
-const myGoals: Partial<Goal>[] = [
-  { id: "1", text: "First Goal", userId: "123" },
-  { id: "2", text: "Second Goal", userId: "123" },
-  { id: "3", text: "Third Goal", userId: "123" }
-]
 
 export default defineComponent({
   name: "DashboardPage",
@@ -26,14 +23,22 @@ export default defineComponent({
   }),
   methods: {
     handleAddGoal(text: string) {
-      console.log("Goal", text)
+      const newGoal = { 
+        id: uuid(), 
+        text, 
+        userId: this.user.id 
+      }
+      store.commit('addGoal', newGoal)
+      this.goals = store.getters.getAll
+    },
+    handleRemoveGoal(goalId:string) {
+      store.commit('removeGoal', goalId)
+      this.goals = store.getters.getAll
     }
   },
   mounted() {
-    setTimeout(() => {
-      this.isLoading = false
-      this.goals = myGoals
-    }, 2000)
+    this.isLoading = false
+    this.goals = store.getters.getAll
   }
 })
 </script>
@@ -49,7 +54,7 @@ export default defineComponent({
       <Spinner />
     </div>
     <div v-else>
-      <GoalList :goals="goals" />
+      <GoalList :goals="goals" @removeGoal="handleRemoveGoal" />
     </div>
   </div>
 </template>

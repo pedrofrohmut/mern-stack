@@ -15,7 +15,7 @@ export default defineComponent({
     <div :key="goal.id" v-for="goal in goals" class="goals-container">
       <div class="goal">
         <div class="content">{{ goal.text }}</div>
-        <button class="btn" @click="$emit('deleteGoal')">
+        <button class="btn" @click="$emit('removeGoal', goal.id)">
           <i class="fa-solid fa-trash-can"></i> Delete
         </button>
       </div>
