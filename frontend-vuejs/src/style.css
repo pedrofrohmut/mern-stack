@@ -16,6 +16,7 @@
   --blueGreen: #73daca;
   --lightBlueGreen: #b4f9f8;
   --blue: #2ac3de;
+  --blue-100: #280067;
   --lightBlue: #7dcfff;
   --grayBlue: #7aa2f7;
   --purple: #bb9af7;
@@ -71,7 +72,7 @@ p {
 }
 
 .container {
-  margin: 0 auto;
+  margin: 2rem auto;
   max-width: 760px;
   width: 80%;
 }
@@ -109,12 +110,17 @@ section.heading p {
   border-radius: var(--borderRadius);
   background-color: var(--darkPurple);
   color: var(--gray-200);
+  cursor: pointer;
 }
 
 .btn:disabled {
   background-color: var(--gray-600);
   border: 1px solid var(--gray-600);
   color: var(--gray-500);
+}
+
+.btn i {
+  margin: 0 7px 0 0;
 }
 
 .form-text {
@@ -148,4 +154,18 @@ section.heading p {
 
 .form-group button[type="submit"] {
   margin-top: 0.6em;
+}
+
+.form-inline-group {
+  display: flex;
+  align-items: center;
+}
+
+.form-inline-group input {
+  flex: 1;
+  margin-right: 15px;
+}
+
+.form-inline-group button {
+  padding: 1em 2em;
 }
