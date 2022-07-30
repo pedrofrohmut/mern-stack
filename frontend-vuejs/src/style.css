@@ -38,6 +38,8 @@
   /* Badic */
   --black: #000000;
   --white: #ffffff;
+
+  --borderRadius: 0.7em;
 }
 
 body {
@@ -84,12 +86,12 @@ section.heading h1 {
 
 section.heading p {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: var(--gray-500);
 }
 
 .page-title {
-  font-size: 4rem;
+  font-size: 2.5rem;
   color: var(--lightBlueGreen);
   text-align: center;
   margin: 0;
@@ -101,10 +103,10 @@ section.heading p {
 
 .btn {
   padding: 0.8em 2.4em;
-  font-size: 1.2rem;
+  font-size: 0.9rem;
   font-weight: 600;
   border: 1px solid var(--darkPurple);
-  border-radius: 0.5rem;
+  border-radius: var(--borderRadius);
   background-color: var(--darkPurple);
   color: var(--gray-200);
 }
@@ -117,11 +119,11 @@ section.heading p {
 
 .form-text {
   padding: 0.8em 1.2em;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: var(--white);
   background-color: var(--gray-500);
   border: 1px solid var(--gray-500);
-  border-radius: 0.5rem;
+  border-radius: var(--borderRadius);
   width: 100%;
 }
 
@@ -130,15 +132,20 @@ section.heading p {
 }
 
 .form-group {
-  margin: 0 0 2.5rem 0;
+  margin: 0 0 1.3em 0;
 }
 
 .form-group label {
-  font-size: 1.3rem;
+  padding-left: 0.5em;
+  font-size: 1rem;
   color: var(--lightBlueGreen);
 }
 
 .form-group .label-block {
   display: block;
   margin: 0 0 0.6rem 0;
+}
+
+.form-group button[type="submit"] {
+  margin-top: 0.6em;
 }

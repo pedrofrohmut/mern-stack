@@ -15,7 +15,9 @@ export default defineComponent({
       // Submit api call
       this.email = ""
       this.password = ""
-      setTimeout(() => { this.isSubmitted = false }, 2000)
+      setTimeout(() => {
+        this.isSubmitted = false
+      }, 2000)
     }
   }
 })
