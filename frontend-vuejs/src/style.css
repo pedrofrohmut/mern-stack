@@ -74,10 +74,29 @@ p {
   width: 80%;
 }
 
+section.heading {
+  margin: 0 0 2rem 0;
+}
+
+section.heading h1 {
+  margin-bottom: 1.2rem;
+}
+
+section.heading p {
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--gray-500);
+}
+
 .page-title {
   font-size: 4rem;
   color: var(--lightBlueGreen);
-  padding: 2rem 0;
+  text-align: center;
+  margin: 0;
+}
+
+.page-title i {
+  margin-right: 0.2em;
 }
 
 .btn {
@@ -87,7 +106,13 @@ p {
   border: 1px solid var(--darkPurple);
   border-radius: 0.5rem;
   background-color: var(--darkPurple);
-  color: var(--gray-300);
+  color: var(--gray-200);
+}
+
+.btn:disabled {
+  background-color: var(--gray-600);
+  border: 1px solid var(--gray-600);
+  color: var(--gray-500);
 }
 
 .form-text {
@@ -101,7 +126,7 @@ p {
 }
 
 .form-text::placeholder {
-  color: var(--grayBlue);
+  color: var(--gray-700);
 }
 
 .form-group {
