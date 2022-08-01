@@ -25,19 +25,20 @@ export default defineComponent({
   },
   methods: {
     handleAddGoal(text: string) {
-      const newGoal = { 
-        id: uuid(), 
-        text, 
-        userId: this.user.id 
+      const newGoal = {
+        id: uuid(),
+        text,
+        userId: this.user.id
       }
-      this.$store.commit('addGoal', newGoal)
+      this.$store.dispatch("addGoal", newGoal)
     },
-    handleRemoveGoal(goalId:string) {
-      this.$store.commit('removeGoal', goalId)
+    handleRemoveGoal(goalId: string) {
+      this.$store.dispatch("removeGoal", goalId)
     }
   },
-  mounted() {
-    setTimeout(() => { this.isLoading = false }, 700)
+  async mounted() {
+    await this.$store.dispatch("getAllGoals")
+    this.isLoading = false
   }
 })
 </script>

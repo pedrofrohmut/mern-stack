@@ -7,9 +7,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div className="loadingSpinnerContainer">
-    Loading...
-  </div>
+  <div className="loadingSpinnerContainer">Loading...</div>
 </template>
 
 <style scoped>

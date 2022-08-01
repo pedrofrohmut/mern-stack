@@ -1,7 +1,7 @@
-export type Goal = { 
+export type Goal = {
   id: string
   text: string
-  userId: string 
+  userId: string
 }
 
 export type RootState = {
