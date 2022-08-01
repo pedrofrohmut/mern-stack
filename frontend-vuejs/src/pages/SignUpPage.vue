@@ -4,6 +4,7 @@ import { defineComponent } from "vue"
 export default defineComponent({
   name: "SignUpPage",
   data: () => ({
+    isLoading: false,
     isSubmitted: false,
     name: "",
     email: "",
@@ -12,10 +13,18 @@ export default defineComponent({
     confirmPassword: ""
   }),
   methods: {
-    handleSubmit(e: any) {
-      this.isSubmitted = true
+    handleSubmit: async function (e: any) {
       e.preventDefault()
-      // Submit api call
+      this.isSubmitted = true
+      this.isLoading = true
+      await this.$store.dispatch("signUpUser", {
+        name: this.name,
+        email: this.email,
+        phone: this.phone,
+        password: this.password
+      })
+      this.$router.push("/")
+      this.isLoading = false
       this.name = ""
       this.email = ""
       this.phone = ""

@@ -6,7 +6,23 @@ import Footer from "./components/Footer.vue"
 
 export default defineComponent({
   name: "App",
-  components: { Navbar, Footer }
+  components: { Navbar, Footer },
+  computed: {
+    user() {
+      return this.$store.state.auth.user || null
+    }
+  },
+  mounted: function () {
+    try {
+      const user = this.$store.state.auth.user
+      if (user) return
+      const localStorageUser = JSON.parse(localStorage.getItem("user") || "")
+      if (!localStorageUser) return
+      this.$store.commit("setUser", localStorageUser)
+    } catch (err) {
+      console.log(err)
+    }
+  }
 })
 </script>
 

@@ -4,8 +4,14 @@ import { defineComponent } from "vue"
 export default defineComponent({
   name: "Navbar",
   methods: {
-    handleSignOut() {
-      console.log("Sign Out")
+    handleSignOut: async function () {
+      await this.$store.dispatch("signOutUser")
+      this.$router.push("/signin")
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.state.auth.user || null
     }
   }
 })
@@ -14,9 +20,11 @@ export default defineComponent({
 <template>
   <header>
     <router-link to="/" class="logo">Goals Setter</router-link>
-    <nav>
+    <nav v-if="!user">
       <router-link class="nav-link" to="/signin">Sign In</router-link>
       <router-link class="nav-link" to="/signup">Sign Up</router-link>
+    </nav>
+    <nav v-if="user">
       <a class="nav-link" @click="handleSignOut">Sign Out</a>
     </nav>
   </header>
