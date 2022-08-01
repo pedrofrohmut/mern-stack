@@ -20,7 +20,7 @@ export default defineComponent({
   }),
   computed: {
     goals(): Partial<Goal>[] {
-      return this.$store.state.goals
+      return this.$store.state.goals.goals || []
     }
   },
   methods: {

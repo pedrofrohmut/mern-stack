@@ -21,6 +21,9 @@ export default defineComponent({
       </div>
     </div>
   </div>
+  <div v-else class="goals">
+    <div class="goals-title">No goals to display</div>
+  </div>
 </template>
 
 <style scoped>
