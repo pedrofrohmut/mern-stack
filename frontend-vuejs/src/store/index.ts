@@ -9,7 +9,7 @@ const myGoals: Partial<Goal>[] = [
   { id: "4", text: "Fourth Goal", userId: "123" }
 ]
 
-const store = createStore({
+const store = createStore<RootState>({
   state: () => ({
     goals: myGoals
   }),

@@ -4,8 +4,6 @@ import { v4 as uuid } from "uuid"
 
 import type { Goal } from "../types"
 
-import store from "../store"
-
 import AddGoalForm from "../components/AddGoalForm.vue"
 import Spinner from "../components/Spinner.vue"
 import GoalList from "../components/GoalList.vue"
@@ -15,12 +13,16 @@ export default defineComponent({
   components: { AddGoalForm, Spinner, GoalList },
   data: () => ({
     isLoading: true,
-    goals: [] as Partial<Goal>[],
     user: {
       id: "123",
       name: "John Doe"
     }
   }),
+  computed: {
+    goals(): Partial<Goal>[] {
+      return this.$store.state.goals
+    }
+  },
   methods: {
     handleAddGoal(text: string) {
       const newGoal = { 
@@ -28,17 +30,14 @@ export default defineComponent({
         text, 
         userId: this.user.id 
       }
-      store.commit('addGoal', newGoal)
-      this.goals = store.getters.getAll
+      this.$store.commit('addGoal', newGoal)
     },
     handleRemoveGoal(goalId:string) {
-      store.commit('removeGoal', goalId)
-      this.goals = store.getters.getAll
+      this.$store.commit('removeGoal', goalId)
     }
   },
   mounted() {
-    this.isLoading = false
-    this.goals = store.getters.getAll
+    setTimeout(() => { this.isLoading = false }, 700)
   }
 })
 </script>
