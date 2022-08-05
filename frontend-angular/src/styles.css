@@ -1,0 +1,175 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  font-size: 16px;
+  /* Tokyo Pallete */
+  --pink: #f7768e;
+  --orange: #ff9e64;
+  --yellow: #e0af68;
+  --green: #9ece6a;
+  --blueGreen: #73daca;
+  --lightBlueGreen: #b4f9f8;
+  --blue: #2ac3de;
+  --blue-100: #280067;
+  --lightBlue: #7dcfff;
+  --grayBlue: #7aa2f7;
+  --purple: #bb9af7;
+  --darkPurple: #7f41f1;
+  --gray-100: #cfc9c2;
+  --gray-200: #c0caf5;
+  --gray-300: #a9b1d6;
+  --gray-400: #9aa5ce;
+  --gray-500: #565f89;
+  --gray-600: #414868;
+  --gray-700: #24283b;
+  --gray-800: #1a1b26;
+
+  /* Takoy pallete B */
+  --bGreen: #00ffd2;
+  --bRed: #ff4499;
+  --bDarkBlue: #0a0047;
+  --bBlue: #004687;
+
+  /* Badic */
+  --black: #000000;
+  --white: #ffffff;
+
+  --borderRadius: 0.7em;
+}
+
+body {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 24px;
+  font-weight: 400;
+
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#app {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 1em 0;
+}
+
+p {
+  padding: 1em 0;
+}
+
+.container {
+  margin: 2rem auto;
+  max-width: 760px;
+  width: 80%;
+}
+
+section.heading {
+  margin: 0 0 2rem 0;
+}
+
+section.heading h1 {
+  margin-bottom: 1.2rem;
+}
+
+section.heading p {
+  text-align: center;
+  font-size: 1.3rem;
+  color: var(--gray-500);
+}
+
+.page-container {
+  flex: 1;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  color: var(--lightBlueGreen);
+  text-align: center;
+  margin: 0;
+}
+
+.page-title i {
+  margin-right: 0.2em;
+}
+
+.btn {
+  padding: 0.8em 2.4em;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid var(--darkPurple);
+  border-radius: var(--borderRadius);
+  background-color: var(--darkPurple);
+  color: var(--gray-200);
+  cursor: pointer;
+}
+
+.btn:disabled {
+  background-color: var(--gray-600);
+  border: 1px solid var(--gray-600);
+  color: var(--gray-500);
+}
+
+.btn i {
+  margin: 0 7px 0 0;
+}
+
+.form-text {
+  padding: 0.8em 1.2em;
+  font-size: 1rem;
+  color: var(--white);
+  background-color: var(--gray-500);
+  border: 1px solid var(--gray-500);
+  border-radius: var(--borderRadius);
+  width: 100%;
+}
+
+.form-text::placeholder {
+  color: var(--gray-700);
+}
+
+.form-group {
+  margin: 0 0 1.3em 0;
+}
+
+.form-group label {
+  padding-left: 0.5em;
+  font-size: 1rem;
+  color: var(--lightBlueGreen);
+}
+
+.form-group .label-block {
+  display: block;
+  margin: 0 0 0.6rem 0;
+}
+
+.form-group button[type="submit"] {
+  margin-top: 0.6em;
+}
+
+.form-inline-group {
+  display: flex;
+  align-items: center;
+}
+
+.form-inline-group input {
+  flex: 1;
+  margin-right: 15px;
+}
+
+.form-inline-group button {
+  padding: 1em 2em;
+}

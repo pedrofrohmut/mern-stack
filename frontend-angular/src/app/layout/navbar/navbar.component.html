@@ -1,0 +1,42 @@
+<style>
+  header {
+    background-color: var(--gray-800);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    margin: 0 0 2rem 0;
+  }
+
+  .logo,
+  .nav-link {
+    color: var(--purple);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .logo {
+    font-size: 1.35rem;
+  }
+
+  .nav-link {
+    margin: 0 17px 0 0;
+    color: var(--purple);
+  }
+
+  .nav-link:last-child {
+    margin: 0;
+  }
+</style>
+
+<header>
+  <a routerLink="/" class="logo">Goals Setter</a>
+  <nav *ngIf="!user">
+    <a class="nav-link" routerLink="/signin">Sign In</a>
+    <a class="nav-link" routerLink="/signup">Sign Up</a>
+  </nav>
+  <nav *ngIf="user">
+    <a class="nav-link" (click)="(handleSignOut)">Sign Out</a>
+  </nav>
+</header>
