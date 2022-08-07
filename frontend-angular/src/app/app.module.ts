@@ -10,6 +10,8 @@ import { SignupComponent } from "./pages/signup/signup.component"
 import { NavbarComponent } from "./layout/navbar/navbar.component"
 import { FooterComponent } from "./layout/footer/footer.component"
 import { SpinnerComponent } from "./components/spinner/spinner.component"
+import { AddGoalFormComponent } from "./components/add-goal-form/add-goal-form.component"
+import { GoalListComponent } from "./components/goal-list/goal-list.component"
 
 @NgModule({
     declarations: [
@@ -19,7 +21,9 @@ import { SpinnerComponent } from "./components/spinner/spinner.component"
         SignupComponent,
         NavbarComponent,
         FooterComponent,
-        SpinnerComponent
+        SpinnerComponent,
+        AddGoalFormComponent,
+        GoalListComponent
     ],
     imports: [BrowserModule, AppRoutingModule, FormsModule],
     providers: [],

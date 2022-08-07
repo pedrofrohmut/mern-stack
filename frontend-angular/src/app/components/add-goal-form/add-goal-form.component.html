@@ -1,0 +1,18 @@
+<section class="form">
+    <form (submit)="handleAddGoal()">
+        <div class="form-inline-group">
+            <input
+                type="text"
+                class="form-text"
+                [(ngModel)]="text"
+                name="text"
+                placeholder="What is your goal?"
+                required
+                min="3"
+            />
+            <button type="submit" class="btn" [disabled]="isSubmitted && 'disabled'">
+                <i class="fa-solid fa-paper-plane"></i> Submit
+            </button>
+        </div>
+    </form>
+</section>
