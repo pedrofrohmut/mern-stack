@@ -1,0 +1,43 @@
+<style>
+    .loading-spinner-container {
+        position: fixed;
+        height: 100vh;
+        width: 100vw;
+        top: 0;
+        left: 0;
+        background-color: #000a;
+        z-index: 5000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .loading-spinner {
+        width: 200px;
+        height: 200px;
+        border: 10px solid;
+        border-color: var(--purple) transparent var(--lightBlueGreen) transparent;
+        border-radius: 50%;
+        animation: spin 1.8s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .loading-text {
+        position: relative;
+        top: -0px;
+        left: -134px;
+    }
+</style>
+
+<div class="loading-spinner-container">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Loading</div>
+</div>

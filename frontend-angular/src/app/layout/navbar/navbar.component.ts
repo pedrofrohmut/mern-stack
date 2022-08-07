@@ -1,17 +1,17 @@
 import { Component, OnInit } from "@angular/core"
 
 @Component({
-  selector: "app-navbar",
-  templateUrl: "./navbar.component.html"
+    selector: "app-navbar",
+    templateUrl: "./navbar.component.html"
 })
 export class NavbarComponent implements OnInit {
-  public user = false
+    public user = false
 
-  constructor() {}
+    constructor() {}
 
-  ngOnInit(): void {}
+    ngOnInit(): void {}
 
-  handleSignOut() {
-    console.log("Sign Out")
-  }
+    handleSignOut() {
+        console.log("Sign Out")
+    }
 }
