@@ -1,40 +1,46 @@
 import { Component, OnInit } from "@angular/core"
-import type { Goal } from "src/types"
+import { GoalsService } from "src/app/services/goals.service"
+import type { Goal, ResponseGoal } from "src/types"
 
 @Component({
     selector: "app-dashboard",
     templateUrl: "./dashboard.component.html"
 })
 export class DashboardComponent implements OnInit {
+    private readonly goalsService: GoalsService
+
     public user = { name: "John Doe" }
     public isLoading = true
 
     public goals: Goal[] = []
 
-    constructor() {}
+    constructor(goalsService: GoalsService) {
+        this.goalsService = goalsService
+    }
 
     ngOnInit(): void {
-        setTimeout(() => {
-            this.goals = [
-                { id: "1", text: "First goal", userId: "123" },
-                { id: "2", text: "Second goal", userId: "123" },
-                { id: "3", text: "Third goal", userId: "123" }
-            ]
-            this.isLoading = false
-        }, 2000)
+        this.goalsService.getAllGoals().subscribe((responseGoals) => {
+            setTimeout(() => {
+                this.goals = responseGoals.map((g) => ({
+                    id: g._id,
+                    text: g.text,
+                    userId: g.userId
+                }))
+                this.isLoading = false
+            }, 1000)
+        })
     }
 
     handleAddGoal(text: string) {
-        console.log("ADD GOAL", text)
-        const newGoal = {
-            id: Math.floor(Math.random() * 100000).toString(),
-            text,
-            userId: "123"
-        }
-        this.goals.push(newGoal)
+        this.goalsService.addGoal(text).subscribe((response) => {
+            const { _id: id, text, userId } = response as ResponseGoal
+            this.goals.push({ id, text, userId })
+        })
     }
 
     handleRemoveGoal(goalId: string) {
-        this.goals = this.goals.filter(goal => goal.id !== goalId)
+        this.goalsService.deleteGoal(goalId).subscribe(() => {
+            this.goals = this.goals.filter((goal) => goal.id !== goalId)
+        })
     }
 }

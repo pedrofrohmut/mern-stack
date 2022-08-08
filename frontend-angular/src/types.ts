@@ -8,3 +8,12 @@ export type Goal = {
     text: string
     userId: string
 }
+
+export type ResponseGoal = {
+    _id: string
+    text: string
+    userId: string
+    createdAt: string
+    updatedAt: string
+    __v: number
+}
