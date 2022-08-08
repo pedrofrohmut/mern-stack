@@ -17,3 +17,15 @@ export type ResponseGoal = {
     updatedAt: string
     __v: number
 }
+
+export type NewUser = {
+    name: string
+    email: string
+    phone: string
+    password: string
+}
+
+export type SignInUser = {
+    email: string
+    password: string
+}

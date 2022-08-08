@@ -1,11 +1,8 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
-import { ResponseGoal } from "src/types"
-
-// TODO: Replace it for LocalSotrage with Auth
-const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZDg3N2FjMjhmYWRkNzhkNDQ2OWJlNyIsImlhdCI6MTY1OTk1ODg1NywiZXhwIjoxNjYyNTUwODU3fQ.8emtl0Qbl9mSwyjDLdnWUXHKgVWQNEAj2FfjOu1nDWU"
-const userId = "62d877ac28fadd78d4469be7"
+import { catchError, throwError } from "rxjs"
+import { LocalStorageService } from "./local-storage.service"
+import type { ResponseGoal } from "src/types"
 
 @Injectable({
     providedIn: "root"
@@ -13,12 +10,15 @@ const userId = "62d877ac28fadd78d4469be7"
 export class GoalsService {
     private readonly URL = "http://localhost:5000/api/goals"
     private readonly httpClient: HttpClient
+    private readonly localStorageService: LocalStorageService
 
-    constructor(httpClient: HttpClient) {
+    constructor(httpClient: HttpClient, localStorageService: LocalStorageService) {
         this.httpClient = httpClient
+        this.localStorageService = localStorageService
     }
 
     private getOptions() {
+        const token = this.localStorageService.getLocalStorageUser().token
         return {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -27,14 +27,21 @@ export class GoalsService {
     }
 
     getAllGoals() {
-        return this.httpClient.get<ResponseGoal[]>(this.URL, this.getOptions())
+        return this.httpClient
+            .get<ResponseGoal[]>(this.URL, this.getOptions())
+            .pipe(catchError((err) => throwError(() => err.error.message)))
     }
 
     addGoal(text: string) {
-        return this.httpClient.post<ResponseGoal>(this.URL, { text, userId }, this.getOptions())
+        const userId = this.localStorageService.getLocalStorageUser().id
+        return this.httpClient
+            .post<ResponseGoal>(this.URL, { text, userId }, this.getOptions())
+            .pipe(catchError((err) => throwError(() => err.error.message)))
     }
 
     deleteGoal(goalId: string) {
-        return this.httpClient.delete<void>(`${this.URL}/${goalId}`, this.getOptions())
+        return this.httpClient
+            .delete<void>(`${this.URL}/${goalId}`, this.getOptions())
+            .pipe(catchError((err) => throwError(() => err.error.message)))
     }
 }
