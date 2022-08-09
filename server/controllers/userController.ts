@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { compare, genSalt, hash } from "bcryptjs"
-import { sign } from "jsonwebtoken"
+import { JsonWebTokenError, NotBeforeError, sign, TokenExpiredError, verify } from "jsonwebtoken"
 import asyncHandler from "express-async-handler"
 
 import userModel from "../models/userModel"
@@ -91,4 +91,34 @@ export const signInUser = asyncHandler(async (req: Request, res: Response): Prom
 // @access Private
 export const getCurrentUser = asyncHandler(async (req: Request, res: Response): Promise<void> => {
   res.status(200).json(req.user)
+})
+
+// @desc Verify token is valid
+// @route POST api/users/verify
+// @access Public
+export const verifyToken = asyncHandler(async (req: Request, res: Response) => {
+  const token = req.body.token
+  if (!token) {
+    res.status(400).json({ message: "No token in the request" })
+  }
+  if (!process.env.JWT_SECRET) {
+    res.status(500)
+    throw new Error("No JWT Secret found in the server ENV")
+  }
+  try {
+    verify(token, process.env.JWT_SECRET)
+    res.status(200).json(true)
+    return
+  } catch (err) {
+    if (
+      err instanceof JsonWebTokenError ||
+      err instanceof TokenExpiredError ||
+      err instanceof NotBeforeError
+    ) {
+      res.status(200).json(false)
+      return
+    } else {
+      throw new Error("[UserController : VerifyToken] Error to verify the token")
+    }
+  }
 })
