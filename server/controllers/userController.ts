@@ -90,7 +90,9 @@ export const signInUser = asyncHandler(async (req: Request, res: Response): Prom
 // @route GET api/users
 // @access Private
 export const getCurrentUser = asyncHandler(async (req: Request, res: Response): Promise<void> => {
-  res.status(200).json(req.user)
+  const user = req.user
+  const token = req.headers.authorization!.split(" ")[1]
+  res.status(200).json({ ...user, token })
 })
 
 // @desc Verify token is valid
