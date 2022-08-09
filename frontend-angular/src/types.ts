@@ -18,6 +18,13 @@ export type ResponseGoal = {
     __v: number
 }
 
+export type SessionUser = {
+    id: string
+    name: string
+    email: string
+    token: string
+}
+
 export type NewUser = {
     name: string
     email: string

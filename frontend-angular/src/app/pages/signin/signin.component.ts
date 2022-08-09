@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core"
 import { Router } from "@angular/router"
+import { ToastrService } from "ngx-toastr"
 import { AuthService } from "src/app/services/auth.service"
 
 @Component({
@@ -9,20 +10,26 @@ import { AuthService } from "src/app/services/auth.service"
 export class SigninComponent implements OnInit {
     private readonly authService: AuthService
     private readonly router: Router
+    private readonly toastr: ToastrService
 
     public isLoading = false
     public isSubmitted = false
     public email = ""
     public password = ""
 
-    constructor(authService: AuthService, router: Router) {
+    constructor(authService: AuthService, router: Router, toastr: ToastrService) {
         this.authService = authService
         this.router = router
+        this.toastr = toastr
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        if (this.authService.user) {
+            this.router.navigate(['/'])
+        }
+    }
 
-    handleSubmit() {
+    async handleSubmit() {
         this.isSubmitted = true
         this.isLoading = true
         const reset = () => {
@@ -33,19 +40,16 @@ export class SigninComponent implements OnInit {
                 this.isLoading = false
             }, 2000)
         }
-        const credentials = {
-            email: this.email,
-            password: this.password
-        }
+        const credentials = { email: this.email, password: this.password }
         this.authService.signIn(credentials).subscribe({
             next: (user) => {
-                // TODO: add toastr to show success
                 localStorage.setItem("user", JSON.stringify(user))
+                this.toastr.success("User logged in")
                 this.router.navigate(["/"])
                 reset()
             },
             error: (err) => {
-                // TODO: add toastr to show err
+                this.toastr.error(err)
                 reset()
             }
         })

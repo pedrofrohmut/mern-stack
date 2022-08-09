@@ -28,15 +28,20 @@
     .nav-link:last-child {
         margin: 0;
     }
+
+    .nav-username {
+        margin-right: 2em;
+    }
 </style>
 
 <header>
     <a routerLink="/" class="logo">Goals Setter</a>
-    <nav *ngIf="!user">
+    <nav *ngIf="!authService.user">
         <a class="nav-link" routerLink="/signin">Sign In</a>
         <a class="nav-link" routerLink="/signup">Sign Up</a>
     </nav>
-    <nav *ngIf="user">
-        <a class="nav-link" (click)="(handleSignOut)">Sign Out</a>
+    <nav *ngIf="authService.user">
+        <span class="nav-username">{{ authService.user.name }}</span>
+        <a class="nav-link" (click)="handleSignOut()">Sign Out</a>
     </nav>
 </header>

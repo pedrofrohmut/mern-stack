@@ -1,8 +1,8 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 import { catchError, throwError } from "rxjs"
-import { LocalStorageService } from "./local-storage.service"
 import type { ResponseGoal } from "src/types"
+import { getTokenFromLS, getUserFromLS } from "../utils/local-storage"
 
 @Injectable({
     providedIn: "root"
@@ -10,15 +10,14 @@ import type { ResponseGoal } from "src/types"
 export class GoalsService {
     private readonly URL = "http://localhost:5000/api/goals"
     private readonly httpClient: HttpClient
-    private readonly localStorageService: LocalStorageService
 
-    constructor(httpClient: HttpClient, localStorageService: LocalStorageService) {
+    constructor(httpClient: HttpClient) {
         this.httpClient = httpClient
-        this.localStorageService = localStorageService
     }
 
     private getOptions() {
-        const token = this.localStorageService.getLocalStorageUser().token
+        const token = getTokenFromLS()
+        if (!token) return
         return {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -33,7 +32,7 @@ export class GoalsService {
     }
 
     addGoal(text: string) {
-        const userId = this.localStorageService.getLocalStorageUser().id
+        const userId = getUserFromLS()?.id
         return this.httpClient
             .post<ResponseGoal>(this.URL, { text, userId }, this.getOptions())
             .pipe(catchError((err) => throwError(() => err.error.message)))

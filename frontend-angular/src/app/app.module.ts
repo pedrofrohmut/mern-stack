@@ -2,8 +2,10 @@ import { NgModule } from "@angular/core"
 import { BrowserModule } from "@angular/platform-browser"
 import { FormsModule } from "@angular/forms"
 import { HttpClientModule } from "@angular/common/http"
-
 import { AppRoutingModule } from "./app-routing.module"
+import { ToastrModule } from "ngx-toastr"
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
+
 import { AppComponent } from "./app.component"
 import { DashboardComponent } from "./pages/dashboard/dashboard.component"
 import { SigninComponent } from "./pages/signin/signin.component"
@@ -16,17 +18,24 @@ import { GoalListComponent } from "./components/goal-list/goal-list.component"
 
 @NgModule({
     declarations: [
+        AddGoalFormComponent,
         AppComponent,
         DashboardComponent,
+        FooterComponent,
+        GoalListComponent,
+        NavbarComponent,
         SigninComponent,
         SignupComponent,
-        NavbarComponent,
-        FooterComponent,
-        SpinnerComponent,
-        AddGoalFormComponent,
-        GoalListComponent
+        SpinnerComponent
     ],
-    imports: [BrowserModule, HttpClientModule, AppRoutingModule, FormsModule],
+    imports: [
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        BrowserModule,
+        FormsModule,
+        HttpClientModule,
+        ToastrModule.forRoot()
+    ],
     providers: [],
     bootstrap: [AppComponent]
 })
