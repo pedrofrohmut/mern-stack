@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core"
 import { Router } from "@angular/router"
+import { ToastrService } from "ngx-toastr"
 import { AuthService } from "src/app/services/auth.service"
 
 @Component({
@@ -9,6 +10,7 @@ import { AuthService } from "src/app/services/auth.service"
 export class SignupComponent implements OnInit {
     private readonly authService: AuthService
     private readonly router: Router
+    private readonly toastr: ToastrService
 
     public isLoading = false
     public isSubmitted = false
@@ -20,9 +22,10 @@ export class SignupComponent implements OnInit {
     public password = ""
     public confirmPassword = ""
 
-    constructor(authService: AuthService, router: Router) {
+    constructor(authService: AuthService, router: Router, toastr: ToastrService) {
         this.authService = authService
         this.router = router
+        this.toastr = toastr
     }
 
     ngOnInit(): void {}
@@ -44,12 +47,12 @@ export class SignupComponent implements OnInit {
         const { name, email, phone, password } = this
         this.authService.signUp({ name, email, phone, password }).subscribe({
             next: () => {
-                // TODO: add toastr to show success
+                this.toastr.success("New user created. Sign in to access your dashboard")
                 this.router.navigate(["/signin"])
                 reset()
             },
             error: (err) => {
-                // TODO: add toastr to show err
+                this.toastr.error(err)
                 reset()
             }
         })

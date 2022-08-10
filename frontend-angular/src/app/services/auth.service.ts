@@ -1,8 +1,8 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
-import { catchError, throwError, tap } from "rxjs"
-import type { NewUser, SignInUser } from "src/types"
-import {getTokenFromLS} from "../utils/local-storage"
+import { catchError, throwError, tap, BehaviorSubject } from "rxjs"
+import type { NewUser, SessionUser, SignInUser } from "src/types"
+import { getTokenFromLS } from "../utils/local-storage"
 
 @Injectable({
     providedIn: "root"
@@ -11,8 +11,7 @@ export class AuthService {
     private readonly URL = "http://localhost:5000/api/users"
     private readonly httpClient: HttpClient
 
-    user: any = null
-    error: any = null
+    userSubject = new BehaviorSubject<SessionUser | null>(null)
 
     constructor(httpClient: HttpClient) {
         this.httpClient = httpClient
@@ -30,17 +29,17 @@ export class AuthService {
 
     signInWithToken() {
         return this.httpClient.get(`${this.URL}/current`, this.getOptions()).pipe(
-            tap(user => {
-                this.user = user
+            tap((user) => {
+                this.userSubject.next(user as SessionUser)
             }),
-            catchError(err => throwError(() => err.message))
+            catchError((err) => throwError(() => err.message))
         )
     }
 
     signIn(credentials: SignInUser) {
         return this.httpClient.post(`${this.URL}/signin`, credentials).pipe(
             tap((user) => {
-                this.user = user
+                this.userSubject.next(user as SessionUser)
             }),
             catchError((err) => throwError(() => err.error.message))
         )
@@ -54,6 +53,6 @@ export class AuthService {
 
     signOut() {
         localStorage.removeItem("user")
-        this.user = null
+        this.userSubject.next(null)
     }
 }

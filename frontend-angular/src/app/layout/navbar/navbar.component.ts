@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core"
 import { Router } from "@angular/router"
 import { ToastrService } from "ngx-toastr"
 import { AuthService } from "src/app/services/auth.service"
+import { SessionUser } from "src/types"
 
 @Component({
     selector: "app-navbar",
@@ -10,8 +11,9 @@ import { AuthService } from "src/app/services/auth.service"
 export class NavbarComponent implements OnInit {
     private readonly router: Router
     private readonly toastr: ToastrService
+    private readonly authService: AuthService
 
-    readonly authService: AuthService
+    user: SessionUser | null = null
 
     constructor(authService: AuthService, router: Router, toastr: ToastrService) {
         this.authService = authService
@@ -19,7 +21,11 @@ export class NavbarComponent implements OnInit {
         this.toastr = toastr
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.authService.userSubject.subscribe((user) => {
+            this.user = user
+        })
+    }
 
     handleSignOut() {
         this.authService.signOut()

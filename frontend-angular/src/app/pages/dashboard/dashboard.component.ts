@@ -1,7 +1,5 @@
 import { Component, OnInit } from "@angular/core"
-import {Router} from "@angular/router"
 import { GoalsService } from "src/app/services/goals.service"
-import {getUserFromLS, removeUserFromLS} from "src/app/utils/local-storage"
 import type { Goal, ResponseGoal } from "src/types"
 
 @Component({
@@ -10,16 +8,14 @@ import type { Goal, ResponseGoal } from "src/types"
 })
 export class DashboardComponent implements OnInit {
     private readonly goalsService: GoalsService
-    private readonly router: Router
 
     public user = { name: "John Doe" }
     public isLoading = true
 
     public goals: Goal[] = []
 
-    constructor(goalsService: GoalsService, router: Router) {
+    constructor(goalsService: GoalsService) {
         this.goalsService = goalsService
-        this.router = router
     }
 
     ngOnInit(): void {
@@ -31,7 +27,7 @@ export class DashboardComponent implements OnInit {
                     userId: g.userId
                 }))
                 this.isLoading = false
-            }, 1000)
+            }, 500)
         })
     }
 

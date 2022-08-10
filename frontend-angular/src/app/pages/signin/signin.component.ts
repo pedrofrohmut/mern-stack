@@ -23,11 +23,7 @@ export class SigninComponent implements OnInit {
         this.toastr = toastr
     }
 
-    ngOnInit(): void {
-        if (this.authService.user) {
-            this.router.navigate(['/'])
-        }
-    }
+    ngOnInit(): void {}
 
     async handleSubmit() {
         this.isSubmitted = true

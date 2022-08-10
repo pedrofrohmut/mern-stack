@@ -4,7 +4,10 @@ import { Component, OnInit } from "@angular/core"
     selector: "app-footer",
     template: `
         <footer>
-            <div class="content">&copy; Pedro Frohmut 2022</div>
+            <div class="content">
+                &copy; Pedro Frohmut 2022 | Colors by
+                <a href="https://github.com/enkia/tokyo-night-vscode-theme">TokyoNight</a>
+            </div>
         </footer>
     `,
     styles: [
@@ -18,6 +21,10 @@ import { Component, OnInit } from "@angular/core"
 
             .content {
                 text-align: center;
+                color: var(--gray-500);
+            }
+
+            .content a {
                 color: var(--gray-500);
             }
         `
